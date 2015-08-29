@@ -4,6 +4,9 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 
+import controls.*;
+import parts.*;
+
 /**
  * A FlxState which can be used for the actual gameplay.
  */

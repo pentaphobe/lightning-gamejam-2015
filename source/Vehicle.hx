@@ -4,6 +4,8 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.group.FlxSpriteGroup;
 
+import parts.*;
+
 class Vehicle extends FlxSpriteGroup {
 	static var degToRad:Float = Math.PI / 180.0;
 
@@ -15,7 +17,9 @@ class Vehicle extends FlxSpriteGroup {
 	{
 		super(X, Y, SimpleGraphic);
 
-		add(new FlxSprite(0, 0).makeGraphic(32, 32, FlxColor.BLUE));
+		//add(new FlxSprite(0, 0).makeGraphic(32, 32, FlxColor.BLUE));
+		add(new BasicBody());
+		add(new BasicGun());
 
 		drag.x = drag.y = 800;
 	}
@@ -27,22 +31,26 @@ class Vehicle extends FlxSpriteGroup {
 	}
 
 	public function fire():Void {
-		var playState = PlayState.get();
-		var bullet:FlxSprite = playState.addPlayerBullet(new FlxSprite(x, y));
-		var bulletSpeed:Float = 200;
-
-		bullet.velocity.x = velocity.x + Math.cos(angle * Math.PI / 180.0)*bulletSpeed;
-		bullet.velocity.y = velocity.y + Math.sin(angle * Math.PI / 180.0)*bulletSpeed;
-		bullet.angularVelocity = 300;
+		forEachOfType(VehiclePart, function (child) {
+			child.fire();
+		});
 	}
 
 	public function accelerate(amount:Float):Void {
 		acceleration.x = amount * speed * Math.cos(angle * degToRad);
 		acceleration.y = amount * speed * Math.sin(angle * degToRad);
+
+		forEachOfType(VehiclePart, function (child) {
+			child.accelerate(amount);
+		});
 	}
 
 	public function turn(amount:Float):Void {
 		angle += amount * turnSpeed;
+
+		forEachOfType(VehiclePart, function (child) {
+			child.turn(amount);
+		});
 	}
 
 	override public function update():Void {
