@@ -1,27 +1,48 @@
 package;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.text.FlxText;
-import flixel.ui.FlxButton;
-import flixel.util.FlxMath;
+import flixel.group.FlxGroup;
 
 /**
  * A FlxState which can be used for the actual gameplay.
  */
 class PlayState extends FlxState
 {
+	var player:Vehicle;
+	var playerGroup:FlxGroup;
+	var enemyGroup:FlxGroup;
+	var enemyBulletGroup:FlxGroup;
+	var playerBulletGroup:FlxGroup;
+
 	/**
-	 * Function that is called up when to state is created to set it up. 
+	 * Function that is called up when to state is created to set it up.
 	 */
 	override public function create():Void
 	{
 		super.create();
+
+		setupGroups();
+
+		player = new Vehicle(64, 64);
+		player.control = new PlayerControl();
+		playerGroup.add(player);
 	}
-	
+
+	function setupGroups():Void {
+		playerGroup = new FlxGroup();
+		enemyGroup = new FlxGroup();
+		playerBulletGroup = new FlxGroup();
+		enemyBulletGroup = new FlxGroup();
+
+		add(playerGroup);
+		add(enemyGroup);
+		add(enemyBulletGroup);
+		add(playerBulletGroup);
+	}
+
 	/**
-	 * Function that is called when this state is destroyed - you might want to 
+	 * Function that is called when this state is destroyed - you might want to
 	 * consider setting all objects this state uses to null to help garbage collection.
 	 */
 	override public function destroy():Void
@@ -35,5 +56,5 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-	}	
+	}
 }
