@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
@@ -19,6 +20,7 @@ class PlayState extends FlxState
 	var enemyGroup:FlxGroup;
 	var enemyBulletGroup:FlxGroup;
 	var playerBulletGroup:FlxGroup;
+	var obstacleGroup:FlxGroup;
 
 	/**
 	 * Function that is called up when to state is created to set it up.
@@ -29,11 +31,11 @@ class PlayState extends FlxState
 		instance = this;
 		setupGroups();
 
-		player = new Vehicle(64, 64);
+		player = new BasicVehicle();
 		player.control = new PlayerControl();
 		playerGroup.add(player);
 
-		var testEnemy:Vehicle = new Vehicle(64, 64);
+		var testEnemy:Vehicle = new BasicVehicle();
 		testEnemy.x = 400;
 		testEnemy.y = 300;
 		testEnemy.control = new DummyControl();
@@ -45,7 +47,9 @@ class PlayState extends FlxState
 		enemyGroup = new FlxGroup();
 		playerBulletGroup = new FlxGroup();
 		enemyBulletGroup = new FlxGroup();
+		obstacleGroup = new FlxGroup();
 
+		add(obstacleGroup);
 		add(playerGroup);
 		add(enemyGroup);
 		add(enemyBulletGroup);
@@ -78,6 +82,31 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+
+		doCollisions();
+	}
+
+	public function doCollisions():Void {
+		FlxG.collide(playerGroup, enemyGroup);
+		FlxG.collide(playerGroup, obstacleGroup);
+		FlxG.collide(enemyGroup, obstacleGroup);
+		FlxG.collide(playerBulletGroup, enemyGroup);
+		FlxG.collide(enemyBulletGroup, playerGroup);
+
+		FlxG.overlap(playerBulletGroup, enemyGroup, function (first, second) {
+			second.hurt(1 /*player.stats.strength*/);
+			// second.flicker(1.5);
+			var dx:Float = second.x - player.x;
+			var dy:Float = second.y - player.y;
+			var div:Float = Math.max(Math.abs(dx), Math.abs(dy));
+			dx /= div;
+			dy /= div;
+			var knockback:Float = 500;
+			second.velocity.x += dx * knockback;
+			second.velocity.y += dy * knockback;
+			AssetPaths.deathSound.play();
+			// hitEnemy = true;
+		});
 	}
 
 	public static function get():PlayState {

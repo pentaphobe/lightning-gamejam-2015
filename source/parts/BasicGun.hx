@@ -9,6 +9,7 @@ class BasicGun extends VehiclePart {
 	}
 
 	override public function fire():Void {
+		// [@todo NAUGHTY - shouldn't need PlayState to be a singleton]
 		var playState = PlayState.get();
 		var bullet:FlxSprite = playState.addPlayerBullet(new FlxSprite(x, y));
 		var bulletSpeed:Float = 200;

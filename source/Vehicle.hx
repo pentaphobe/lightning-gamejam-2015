@@ -6,7 +6,7 @@ import flixel.group.FlxSpriteGroup;
 
 import parts.*;
 
-class Vehicle extends FlxSpriteGroup {
+class Vehicle extends FlxSprite {
 	static var degToRad:Float = Math.PI / 180.0;
 
 	public var speed:Float = 300;
@@ -17,11 +17,9 @@ class Vehicle extends FlxSpriteGroup {
 	{
 		super(X, Y, SimpleGraphic);
 
-		//add(new FlxSprite(0, 0).makeGraphic(32, 32, FlxColor.BLUE));
-		add(new BasicBody());
-		add(new BasicGun());
+		// makeGraphic(32, 32, FlxColor.BLUE);
 
-		drag.x = drag.y = 800;
+		drag.x = drag.y = 1800;
 	}
 
 	public function updateControls():Void {
@@ -31,26 +29,15 @@ class Vehicle extends FlxSpriteGroup {
 	}
 
 	public function fire():Void {
-		forEachOfType(VehiclePart, function (child) {
-			child.fire();
-		});
 	}
 
 	public function accelerate(amount:Float):Void {
 		acceleration.x = amount * speed * Math.cos(angle * degToRad);
 		acceleration.y = amount * speed * Math.sin(angle * degToRad);
-
-		forEachOfType(VehiclePart, function (child) {
-			child.accelerate(amount);
-		});
 	}
 
 	public function turn(amount:Float):Void {
 		angle += amount * turnSpeed;
-
-		forEachOfType(VehiclePart, function (child) {
-			child.turn(amount);
-		});
 	}
 
 	override public function update():Void {
