@@ -31,3 +31,18 @@
 	- lasers
 - QWOP style with a Damp Bear trying to catch salmon
 	-
+
+# Pain Carte it is then
+
+- Top down
+- Arena combat
+- Retro-futuristic
+	- "In the dark future of 200x"
+- France has taken over
+	- Map expansion
+- Mad Max ish
+- "Violence Baguettes Violence"
+- "Negative thoughts baguette negative actions."
+- Bread crumbs
+- Grappling hook?
+-
