@@ -9,6 +9,8 @@ import flixel.group.FlxGroup;
  */
 class PlayState extends FlxState
 {
+	private static var instance:PlayState = null;
+
 	var player:Vehicle;
 	var playerGroup:FlxGroup;
 	var enemyGroup:FlxGroup;
@@ -21,12 +23,18 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-
+		instance = this;
 		setupGroups();
 
 		player = new Vehicle(64, 64);
 		player.control = new PlayerControl();
 		playerGroup.add(player);
+
+		var testEnemy:Vehicle = new Vehicle(64, 64);
+		testEnemy.x = 400;
+		testEnemy.y = 300;
+		testEnemy.control = new DummyControl();
+		enemyGroup.add(testEnemy);
 	}
 
 	function setupGroups():Void {
@@ -41,6 +49,16 @@ class PlayState extends FlxState
 		add(playerBulletGroup);
 	}
 
+	public function addPlayerBullet(bullet:FlxSprite):FlxSprite {
+		playerBulletGroup.add(bullet);
+		return bullet;
+	}
+
+	public function addEnemyBullet(bullet:FlxSprite):FlxSprite {
+		enemyBulletGroup.add(bullet);
+		return bullet;
+	}
+
 	/**
 	 * Function that is called when this state is destroyed - you might want to
 	 * consider setting all objects this state uses to null to help garbage collection.
@@ -48,6 +66,7 @@ class PlayState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
+		instance = null;
 	}
 
 	/**
@@ -56,5 +75,9 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+	}
+
+	public static function get():PlayState {
+		return instance;
 	}
 }
