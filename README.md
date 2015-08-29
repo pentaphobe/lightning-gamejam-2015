@@ -13,4 +13,21 @@
 	- A Bad Perm
 	- Mr Bad Ape
 	- Mr Bad Pea
+- Pain (french bread) Carte (map)
+	- Cart has a trebuchet that shoots bread
+	- Musette?
+	- side on car platformer?
+		- fast or slow?
+		- twitch or explore?
+	- Who are we fighting?
+		- Mimes?
+		- Jacques Chirac (nuke boss)
+	- Who are we?
+		- Why are we driving the PainCarte ("why aren't we?")
+		- Something something "eat cake"...
+- The pain cart is constantly hurting you?
+- Can't complete level without the paincart (sort of tethered together)
+- You're chasing the cart down the hill?
+	- lasers
+- QWOP style with a Damp Bear trying to catch salmon
 	-
