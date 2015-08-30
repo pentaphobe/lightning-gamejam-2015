@@ -20,7 +20,7 @@ class PlayState extends FlxState
 	var enemyGroup:FlxGroup;
 	var enemyBulletGroup:FlxGroup;
 	var playerBulletGroup:FlxGroup;
-	var obstacleGroup:FlxGroup;
+	var scenery:Level;
 
 	/**
 	 * Function that is called up when to state is created to set it up.
@@ -33,13 +33,18 @@ class PlayState extends FlxState
 
 		player = new BasicVehicle();
 		player.control = new PlayerControl();
+		player.mass = 10;
 		playerGroup.add(player);
 
-		var testEnemy:Vehicle = new BasicVehicle();
-		testEnemy.x = 400;
-		testEnemy.y = 300;
-		testEnemy.control = new DummyControl();
-		enemyGroup.add(testEnemy);
+		for (i in 0...10) {
+			var testEnemy:Vehicle = new BasicVehicle();
+			testEnemy.x = Math.random() * FlxG.width;
+			testEnemy.y = Math.random() * FlxG.height;
+			testEnemy.control = new DummyControl();
+			testEnemy.health = 10;
+			testEnemy.mass = 10;
+			enemyGroup.add(testEnemy);
+		}
 	}
 
 	function setupGroups():Void {
@@ -47,9 +52,10 @@ class PlayState extends FlxState
 		enemyGroup = new FlxGroup();
 		playerBulletGroup = new FlxGroup();
 		enemyBulletGroup = new FlxGroup();
-		obstacleGroup = new FlxGroup();
+		scenery = new Level();
 
-		add(obstacleGroup);
+
+		add(scenery);
 		add(playerGroup);
 		add(enemyGroup);
 		add(enemyBulletGroup);
@@ -88,10 +94,13 @@ class PlayState extends FlxState
 
 	public function doCollisions():Void {
 		FlxG.collide(playerGroup, enemyGroup);
-		FlxG.collide(playerGroup, obstacleGroup);
-		FlxG.collide(enemyGroup, obstacleGroup);
+		FlxG.collide(playerGroup, scenery);
+		FlxG.collide(enemyGroup, scenery);
 		FlxG.collide(playerBulletGroup, enemyGroup);
 		FlxG.collide(enemyBulletGroup, playerGroup);
+
+		// collide bullets
+		FlxG.collide(enemyBulletGroup, playerBulletGroup);
 
 		FlxG.overlap(playerBulletGroup, enemyGroup, function (first, second) {
 			second.hurt(1 /*player.stats.strength*/);

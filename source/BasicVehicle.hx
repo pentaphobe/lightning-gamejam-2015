@@ -21,7 +21,7 @@ class BasicVehicle extends Vehicle {
 		super(X, Y, SimpleGraphic);
 
 		attackTimeoutCounter = attackDelay;
-		makeGraphic(32, 32, FlxColor.BLUE);
+		makeGraphic(32, 24, FlxColor.BLUE);
 	}
 
 	override public function fire():Void {
@@ -35,7 +35,7 @@ class BasicVehicle extends Vehicle {
 		// [@todo NAUGHTY - shouldn't need PlayState to be a singleton]
 		var playState = PlayState.get();
 		var bullet:FlxSprite = playState.addPlayerBullet(new FlxSprite(x, y));
-		var bulletSpeed:Float = 200;
+		var bulletSpeed:Float = 600;
 
 		bullet.velocity.x = velocity.x + Math.cos(angle * Math.PI / 180.0)*bulletSpeed;
 		bullet.velocity.y = velocity.y + Math.sin(angle * Math.PI / 180.0)*bulletSpeed;
