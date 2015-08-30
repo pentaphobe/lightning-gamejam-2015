@@ -32,6 +32,8 @@ class PlayState extends FlxState
 		setupGroups();
 
 		player = new BasicVehicle();
+		player.x = FlxG.width / 2;
+		player.y = FlxG.height / 2;
 		player.control = new PlayerControl();
 		player.mass = 10;
 		playerGroup.add(player);
@@ -96,11 +98,13 @@ class PlayState extends FlxState
 		FlxG.collide(playerGroup, enemyGroup);
 		FlxG.collide(playerGroup, scenery);
 		FlxG.collide(enemyGroup, scenery);
-		FlxG.collide(playerBulletGroup, enemyGroup);
-		FlxG.collide(enemyBulletGroup, playerGroup);
 
 		// collide bullets
 		FlxG.collide(enemyBulletGroup, playerBulletGroup);
+		FlxG.collide(playerBulletGroup, enemyGroup);
+		FlxG.collide(enemyBulletGroup, playerGroup);
+		FlxG.collide(playerBulletGroup, scenery);
+		FlxG.collide(enemyBulletGroup, scenery);
 
 		FlxG.overlap(playerBulletGroup, enemyGroup, function (first, second) {
 			second.hurt(1 /*player.stats.strength*/);

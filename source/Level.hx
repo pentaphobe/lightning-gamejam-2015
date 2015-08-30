@@ -24,7 +24,6 @@ class Level extends FlxGroup {
 			var block:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.tiles__png, true, 16, 16);
 			block.x = x;
 			block.y = 0;
-			block.frame = 1;
 			add(block);
 			block = new FlxSprite().loadGraphic(AssetPaths.tiles__png, true, 16, 16);
 			block.x = x;
